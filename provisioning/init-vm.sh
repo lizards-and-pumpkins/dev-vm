@@ -32,6 +32,8 @@ sudo apt-get -y install php7.0-intl
 sudo apt-get -y install php7.0-mbstring
 sudo apt-get -y install php7.0-dev
 
+sudo apt-get install unzip
+
 sudo apt-get -y install imagemagick
 sudo apt-get -y install libmagickwand-dev
 git clone git@github.com:mkoppanen/imagick.git
