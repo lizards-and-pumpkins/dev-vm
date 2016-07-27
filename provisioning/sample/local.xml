@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <install>
+            <date><![CDATA[Thu, 03 Mar 2016 11:19:04 +0000]]></date>
+        </install>
+        <crypt>
+            <key><![CDATA[3668526953506bf943d8fc8959c873c8]]></key>
+        </crypt>
+        <disable_local_modules>false</disable_local_modules>
+        <resources>
+            <db>
+                <table_prefix><![CDATA[]]></table_prefix>
+            </db>
+            <default_setup>
+                <connection>
+                    <host><![CDATA[127.0.0.1]]></host>
+                    <username><![CDATA[root]]></username>
+                    <password><![CDATA[root]]></password>
+                    <dbname><![CDATA[lizards-and-pumpkins-demo]]></dbname>
+                    <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
+                    <model><![CDATA[mysql4]]></model>
+                    <type><![CDATA[pdo_mysql]]></type>
+                    <pdoType><![CDATA[]]></pdoType>
+                    <active>1</active>
+                </connection>
+            </default_setup>
+        </resources>
+        <session_save><![CDATA[files]]></session_save>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <frontName><![CDATA[admin]]></frontName>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>

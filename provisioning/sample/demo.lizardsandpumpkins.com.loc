@@ -1,0 +1,84 @@
+server {
+  listen 80;
+  server_name demo.lizardsandpumpkins.com.loc;
+  root /vagrant/lizards-and-pumpkins/sample-project/pub;
+
+  location ~ .php/ {
+    # The following line is required by Magento
+    rewrite ^(.*.php)/ $1 last;
+  }
+
+  location ~ \.php {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    try_files $uri =404;
+    expires off;
+    fastcgi_read_timeout 900s;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include /etc/nginx/fastcgi_params;
+    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+  }
+
+  location ~* /(de|en|fr)/(css|fonts|images|js|media) {
+      rewrite ^/(de|en|fr)/(.*) /$2 permanent;
+  }
+
+  location / {
+    try_files $uri @lizards_and_pumpkins;
+
+    set $LIZARDS_SCRIPT_NAME /en/index.php;
+  }
+
+  location /en/ {
+    try_files $uri @lizards_and_pumpkins;
+
+    set $LIZARDS_SCRIPT_NAME /en/index.php;
+  }
+
+  location /de/ {
+    try_files $uri @lizards_and_pumpkins;
+
+    set $LIZARDS_SCRIPT_NAME /de/index.php;
+  }
+
+  location /fr/ {
+    try_files $uri @lizards_and_pumpkins;
+
+    set $LIZARDS_SCRIPT_NAME /fr/index.php;
+  }
+
+  location @lizards_and_pumpkins {
+    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    
+    include fastcgi_params;
+ 
+    fastcgi_param LP_BASE_URL_EN "http://demo.lizardsandpumpkins.com.loc/en/";
+    fastcgi_param LP_BASE_URL_DE "http://demo.lizardsandpumpkins.com.loc/de/";
+    fastcgi_param LP_BASE_URL_FR "http://demo.lizardsandpumpkins.com.loc/fr/";
+    fastcgi_param LP_FILE_STORAGE_BASE_PATH "/vagrant/lizards-and-pumpkins/sample-project/tmp";
+    fastcgi_param LP_CATALOG_IMPORT_DIRECTORY "/vagrant/lizards-and-pumpkins/sample-project/share";
+    fastcgi_param LP_MEDIA_BASE_PATH "/vagrant/lizards-and-pumpkins/sample-project/pub/media";
+    fastcgi_param LP_WEBSITE_MAP "http://demo.lizardsandpumpkins.com.loc/en/=en|http://demo.lizardsandpumpkins.com.loc/de/=de|http://demo.lizardsandpumpkins.com.loc/fr/=fr";
+    fastcgi_param LP_LOG_FILE_PATH "/vagrant/lizards-and-pumpkins/sample-project/share/system.log";
+
+    fastcgi_param SCRIPT_NAME $LIZARDS_SCRIPT_NAME;
+    fastcgi_param SCRIPT_FILENAME /vagrant/lizards-and-pumpkins/sample-project/pub/index-lizards-and-pumpkins.php;
+
+    fastcgi_intercept_errors on;
+    recursive_error_pages on;
+    error_page 404 = @magento;
+  }
+
+  location @magento {
+    fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+
+    include fastcgi_params;
+
+    fastcgi_param MAGE_IS_DEVELOPER_MODE 1;
+
+    fastcgi_param SCRIPT_FILENAME /vagrant/lizards-and-pumpkins/sample-project/pub/index-magento.php;
+    fastcgi_param SCRIPT_NAME /index.php;
+  }
+}
