@@ -79,8 +79,6 @@ sudo mv composer.phar /usr/local/bin/composer
 source sample-project/build/init.sh /vagrant/sample-project
 
 # TODO: Source env variables
+# TODO: Start daemons (including Magento) if not running
 
 source sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
-
-# TODO: Start daemons (including Magento) if not running
-# TODO: Trigger templates rendering
