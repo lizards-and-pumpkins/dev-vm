@@ -27,7 +27,6 @@ sudo /etc/init.d/nginx restart
 
 sudo apt-get -y install php-fpm
 sudo apt-get -y install php-mysql
-sudo apt-get -y install php7.0-gd
 sudo apt-get -y install php-curl
 sudo apt-get -y install php7.0-intl
 sudo apt-get -y install php7.0-mbstring
