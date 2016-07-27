@@ -30,6 +30,7 @@ sudo apt-get -y install php-mysql
 sudo apt-get -y install php7.0-gd
 sudo apt-get -y install php-curl
 sudo apt-get -y install php7.0-intl
+sudo apt-get -y install php7.0-mbstring
 sudo apt-get -y install php7.0-dev
 
 sudo apt-get -y install imagemagick
