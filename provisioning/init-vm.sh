@@ -101,3 +101,11 @@ bash bin/consumerSupervisor.sh bin/commandConsumer.php &
 bash bin/consumerSupervisor.sh bin/eventConsumer.php &
 
 source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
+
+
+rm -rf /vagrant/sample-project/src/magento/var/cache/
+
+echo ''
+echo ''
+echo ''
+echo 'Access Lizards and Pumpkins with http://demo.lizardsandpumpkins.com.loc/'
