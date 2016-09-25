@@ -70,8 +70,12 @@ mv magento-mirror sample-project/src/magento
 
 git clone git@github.com:riconeitzel/magento_sample_data_1.9.1.0_clean.git
 mv magento_sample_data_1.9.1.0_clean/src/media sample-project/share/
-echo 'CREATE DATABASE IF NOT EXISTS `lizards-and-pumpkins-demo`' | mysql -u root -proot
-mysql -u root -proot lizards-and-pumpkins-demo < magento_sample_data_1.9.1.0_clean/src/magento_sample_data_for_1.9.1.0.sql
+
+cp /vagrant/provisioning/sample/my.cnf ~/.my.cnf
+
+echo 'CREATE DATABASE IF NOT EXISTS `lizards-and-pumpkins-demo`' | mysql
+mysql lizards-and-pumpkins-demo < magento_sample_data_1.9.1.0_clean/src/magento_sample_data_for_1.9.1.0.sql
+echo "UPDATE `core_config_data` SET value ='http://demo.lizardsandpumpkins.com.loc/' WHERE path IN ('web/unsecure/base_url', 'web/secure/base_url');" | mysql lizards-and-pumpkins-demo
 rm -fr magento_sample_data_1.9.1.0_clean
 
 cp provisioning/sample/local.xml sample-project/share/
