@@ -60,7 +60,7 @@ server {
     fastcgi_param LP_FILE_STORAGE_BASE_PATH "/vagrant/sample-project/tmp";
     fastcgi_param LP_CATALOG_IMPORT_DIRECTORY "/vagrant/sample-project/share";
     fastcgi_param LP_MEDIA_BASE_PATH "/vagrant/sample-project/pub/media";
-    fastcgi_param LP_WEBSITE_MAP "http://demo.lizardsandpumpkins.com.loc/en/=en|http://demo.lizardsandpumpkins.com.loc/de/=de|http://demo.lizardsandpumpkins.com.loc/fr/=fr";
+    fastcgi_param LP_WEBSITE_MAP "http://demo.lizardsandpumpkins.com.loc/=en|http://demo.lizardsandpumpkins.com.loc/en/=en|http://demo.lizardsandpumpkins.com.loc/de/=de|http://demo.lizardsandpumpkins.com.loc/fr/=fr";
     fastcgi_param LP_LOG_FILE_PATH "/vagrant/sample-project/share/system.log";
 
     fastcgi_param SCRIPT_NAME $LIZARDS_SCRIPT_NAME;
