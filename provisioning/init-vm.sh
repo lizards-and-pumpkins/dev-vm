@@ -26,6 +26,8 @@ sudo cp provisioning/sample/demo.lizardsandpumpkins.com.loc /etc/nginx/sites-ava
 sudo ln -sf /etc/nginx/sites-available/demo.lizardsandpumpkins.com.loc /etc/nginx/sites-enabled/
 sudo /etc/init.d/nginx restart
 
+grep -q -F 'demo.lizardsandpumpkins.com.loc' /etc/hosts || sudo echo 127.0.0.1 demo.lizardsandpumpkins.com.loc >> /etc/hosts
+
 sudo apt-get -y install php-fpm
 sudo apt-get -y install php-mysql
 sudo apt-get -y install php-curl
@@ -103,4 +105,4 @@ bash bin/consumerSupervisor.sh bin/eventConsumer.php &
 
 source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
 
-echo "\n\n\nAccess Lizards and Pumpkins with http://demo.lizardsandpumpkins.com.loc/"
+printf "\n\n\nAll done. Please add '33.33.33.77 demo.lizardsandpumpkins.com.loc' to your local hosts file. After that you will be able to access Lizards and Pumpkins at http://demo.lizardsandpumpkins.com.loc/"
