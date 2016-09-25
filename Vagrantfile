@@ -10,10 +10,6 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder BASE_DIRECTORY, "/vagrant", type: SYNCED_FOLDER_TYPE
 
   config.vm.hostname = "demo.lizardsandpumpkins.com.loc"
-  config.hostmanager.enabled = true
-  config.hostmanager.manage_host = true
-  config.hostmanager.manage_guest = true
-
   config.ssh.forward_agent = true
 
   config.vm.provider "virtualbox" do |v|
