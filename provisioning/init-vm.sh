@@ -105,7 +105,4 @@ bash bin/consumerSupervisor.sh bin/eventConsumer.php &
 
 source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
 
-echo ''
-echo ''
-echo ''
-echo 'Access Lizards and Pumpkins with http://demo.lizardsandpumpkins.com.loc/'
+echo "\n\n\nAccess Lizards and Pumpkins with http://demo.lizardsandpumpkins.com.loc/"
