@@ -1,0 +1,8 @@
+export LP_BASE_URL_EN="http://demo.lizardsandpumpkins.com.loc/en/"
+export LP_BASE_URL_DE="http://demo.lizardsandpumpkins.com.loc/de/"
+export LP_BASE_URL_FR="http://demo.lizardsandpumpkins.com.loc/fr/"
+export LP_FILE_STORAGE_BASE_PATH="/vagrant/sample-project/tmp"
+export LP_CATALOG_IMPORT_DIRECTORY="/vagrant/sample-project/share"
+export LP_MEDIA_BASE_PATH="/vagrant/sample-project/pub/media"
+export LP_WEBSITE_MAP="http://demo.lizardsandpumpkins.com.loc/en/=en|http://demo.lizardsandpumpkins.com.loc/de/=de|http://demo.lizardsandpumpkins.com.loc/fr/=fr"
+export LP_LOG_FILE_PATH="/vagrant/sample-project/share/system.log"

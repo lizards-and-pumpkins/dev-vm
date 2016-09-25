@@ -25,12 +25,15 @@ sudo cp provisioning/sample/demo.lizardsandpumpkins.com.loc /etc/nginx/sites-ava
 sudo ln -sf /etc/nginx/sites-available/demo.lizardsandpumpkins.com.loc /etc/nginx/sites-enabled/
 sudo /etc/init.d/nginx restart
 
+grep -q -F 'demo.lizardsandpumpkins.com.loc' /etc/hosts || sudo echo 127.0.0.1 demo.lizardsandpumpkins.com.loc >> /etc/hosts
+
 sudo apt-get -y install php-fpm
 sudo apt-get -y install php-mysql
 sudo apt-get -y install php-curl
 sudo apt-get -y install php7.0-intl
 sudo apt-get -y install php7.0-mbstring
 sudo apt-get -y install php7.0-dev
+sudo apt-get -y install php7.0-xml
 
 sudo apt-get install unzip
 
@@ -56,6 +59,8 @@ git submodule update --init --recursive
 cd ..
 
 mkdir sample-project/share
+mkdir sample-project/share/log
+mkdir sample-project/tmp
 
 git clone git@github.com:OpenMage/magento-mirror.git
 git apply --directory=magento-mirror/ provisioning/magento-php7.patch
@@ -79,7 +84,14 @@ sudo mv composer.phar /usr/local/bin/composer
 
 source sample-project/build/init.sh /vagrant/sample-project
 
-# TODO: Source env variables
-# TODO: Start daemons (including Magento) if not running
+source /vagrant/provisioning/sample/env
 
-source sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
+php /vagrant/provisioning/triggerMagentoSetupScripts.php
+
+cd /vagrant/sample-project/src/magento
+nohup ../lizards-and-pumpkins/catalog/bin/consumerSupervisor.sh -l ../../share/log/system.log ./pollExportQueue.php >> ../../share/log/system.log 2>&1 &
+cd /vagrant/sample-project/src/lizards-and-pumpkins
+bash bin/consumerSupervisor.sh bin/commandConsumer.php &
+bash bin/consumerSupervisor.sh bin/eventConsumer.php &
+
+source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project

@@ -1,7 +1,7 @@
 server {
   listen 80;
   server_name demo.lizardsandpumpkins.com.loc;
-  root /vagrant/lizards-and-pumpkins/sample-project/pub;
+  root /vagrant/sample-project/pub;
 
   location ~ .php/ {
     # The following line is required by Magento
@@ -57,14 +57,14 @@ server {
     fastcgi_param LP_BASE_URL_EN "http://demo.lizardsandpumpkins.com.loc/en/";
     fastcgi_param LP_BASE_URL_DE "http://demo.lizardsandpumpkins.com.loc/de/";
     fastcgi_param LP_BASE_URL_FR "http://demo.lizardsandpumpkins.com.loc/fr/";
-    fastcgi_param LP_FILE_STORAGE_BASE_PATH "/vagrant/lizards-and-pumpkins/sample-project/tmp";
-    fastcgi_param LP_CATALOG_IMPORT_DIRECTORY "/vagrant/lizards-and-pumpkins/sample-project/share";
-    fastcgi_param LP_MEDIA_BASE_PATH "/vagrant/lizards-and-pumpkins/sample-project/pub/media";
+    fastcgi_param LP_FILE_STORAGE_BASE_PATH "/vagrant/sample-project/tmp";
+    fastcgi_param LP_CATALOG_IMPORT_DIRECTORY "/vagrant/sample-project/share";
+    fastcgi_param LP_MEDIA_BASE_PATH "/vagrant/sample-project/pub/media";
     fastcgi_param LP_WEBSITE_MAP "http://demo.lizardsandpumpkins.com.loc/en/=en|http://demo.lizardsandpumpkins.com.loc/de/=de|http://demo.lizardsandpumpkins.com.loc/fr/=fr";
-    fastcgi_param LP_LOG_FILE_PATH "/vagrant/lizards-and-pumpkins/sample-project/share/system.log";
+    fastcgi_param LP_LOG_FILE_PATH "/vagrant/sample-project/share/system.log";
 
     fastcgi_param SCRIPT_NAME $LIZARDS_SCRIPT_NAME;
-    fastcgi_param SCRIPT_FILENAME /vagrant/lizards-and-pumpkins/sample-project/pub/index-lizards-and-pumpkins.php;
+    fastcgi_param SCRIPT_FILENAME /vagrant/sample-project/pub/index-lizards-and-pumpkins.php;
 
     fastcgi_intercept_errors on;
     recursive_error_pages on;
@@ -78,7 +78,7 @@ server {
 
     fastcgi_param MAGE_IS_DEVELOPER_MODE 1;
 
-    fastcgi_param SCRIPT_FILENAME /vagrant/lizards-and-pumpkins/sample-project/pub/index-magento.php;
+    fastcgi_param SCRIPT_FILENAME /vagrant/sample-project/pub/index-magento.php;
     fastcgi_param SCRIPT_NAME /index.php;
   }
 }
