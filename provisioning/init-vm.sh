@@ -26,8 +26,6 @@ sudo cp provisioning/sample/demo.lizardsandpumpkins.com.loc /etc/nginx/sites-ava
 sudo ln -sf /etc/nginx/sites-available/demo.lizardsandpumpkins.com.loc /etc/nginx/sites-enabled/
 sudo /etc/init.d/nginx restart
 
-grep -q -F 'demo.lizardsandpumpkins.com.loc' /etc/hosts || sudo echo 127.0.0.1 demo.lizardsandpumpkins.com.loc >> /etc/hosts
-
 sudo apt-get -y install php-fpm
 sudo apt-get -y install php-mysql
 sudo apt-get -y install php-curl
