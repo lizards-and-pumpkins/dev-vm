@@ -15,6 +15,7 @@ gpg -a --export 89DF5277 | sudo apt-key add -
 
 sudo apt-get update
 sudo apt-get -y install git-core
+sudo apt-get -y install vim
 
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
