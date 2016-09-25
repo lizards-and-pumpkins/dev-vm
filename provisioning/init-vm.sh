@@ -76,7 +76,7 @@ cp /vagrant/provisioning/sample/my.cnf ~/.my.cnf
 
 echo 'CREATE DATABASE IF NOT EXISTS `lizards-and-pumpkins-demo`' | mysql
 mysql lizards-and-pumpkins-demo < magento_sample_data_1.9.1.0_clean/src/magento_sample_data_for_1.9.1.0.sql
-echo "UPDATE `core_config_data` SET value ='http://demo.lizardsandpumpkins.com.loc/' WHERE path IN ('web/unsecure/base_url', 'web/secure/base_url');" | mysql lizards-and-pumpkins-demo
+echo "INSERT INTO core_config_data (path, value) VALUES  ('web/unsecure/base_url', 'http://demo.lizardsandpumpkins.com.loc/'), ('web/secure/base_url', 'http://demo.lizardsandpumpkins.com.loc/');" | mysql lizards-and-pumpkins-demo
 rm -fr magento_sample_data_1.9.1.0_clean
 
 cp provisioning/sample/local.xml sample-project/share/
