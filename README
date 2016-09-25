@@ -1,3 +1,0 @@
-Needs vagrant-hostmaster plugin:
-
-    $ vagrant plugin install vagrant-hostmanager
