@@ -95,6 +95,8 @@ source /vagrant/provisioning/sample/env
 
 php /vagrant/provisioning/triggerMagentoSetupScripts.php
 
+rm -rf /vagrant/sample-project/src/magento/var/cache/
+
 cd /vagrant/sample-project/src/magento
 nohup ../lizards-and-pumpkins/catalog/bin/consumerSupervisor.sh -l ../../share/log/system.log ./pollExportQueue.php >> ../../share/log/system.log 2>&1 &
 cd /vagrant/sample-project/src/lizards-and-pumpkins
@@ -102,9 +104,6 @@ bash bin/consumerSupervisor.sh bin/commandConsumer.php &
 bash bin/consumerSupervisor.sh bin/eventConsumer.php &
 
 source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
-
-
-rm -rf /vagrant/sample-project/src/magento/var/cache/
 
 echo ''
 echo ''
