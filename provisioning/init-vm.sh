@@ -15,6 +15,7 @@ gpg -a --export 89DF5277 | sudo apt-key add -
 
 sudo apt-get update
 sudo apt-get -y install git-core
+sudo apt-get -y install vim
 
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
@@ -70,8 +71,12 @@ mv magento-mirror sample-project/src/magento
 
 git clone git@github.com:riconeitzel/magento_sample_data_1.9.1.0_clean.git
 mv magento_sample_data_1.9.1.0_clean/src/media sample-project/share/
-echo 'CREATE DATABASE IF NOT EXISTS `lizards-and-pumpkins-demo`' | mysql -u root -proot
-mysql -u root -proot lizards-and-pumpkins-demo < magento_sample_data_1.9.1.0_clean/src/magento_sample_data_for_1.9.1.0.sql
+
+cp /vagrant/provisioning/sample/my.cnf ~/.my.cnf
+
+echo 'CREATE DATABASE IF NOT EXISTS `lizards-and-pumpkins-demo`' | mysql
+mysql lizards-and-pumpkins-demo < magento_sample_data_1.9.1.0_clean/src/magento_sample_data_for_1.9.1.0.sql
+echo "INSERT INTO core_config_data (path, value) VALUES  ('web/unsecure/base_url', 'http://demo.lizardsandpumpkins.com.loc/'), ('web/secure/base_url', 'http://demo.lizardsandpumpkins.com.loc/');" | mysql lizards-and-pumpkins-demo
 rm -fr magento_sample_data_1.9.1.0_clean
 
 cp provisioning/sample/local.xml sample-project/share/
@@ -90,6 +95,8 @@ source /vagrant/provisioning/sample/env
 
 php /vagrant/provisioning/triggerMagentoSetupScripts.php
 
+rm -rf /vagrant/sample-project/src/magento/var/cache/
+
 cd /vagrant/sample-project/src/magento
 nohup ../lizards-and-pumpkins/catalog/bin/consumerSupervisor.sh -l ../../share/log/system.log ./pollExportQueue.php >> ../../share/log/system.log 2>&1 &
 cd /vagrant/sample-project/src/lizards-and-pumpkins
@@ -97,3 +104,5 @@ bash bin/consumerSupervisor.sh bin/commandConsumer.php &
 bash bin/consumerSupervisor.sh bin/eventConsumer.php &
 
 source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
+
+printf "\n\n\nAll done. Please add '33.33.33.77 demo.lizardsandpumpkins.com.loc' to your local hosts file. After that you will be able to access Lizards and Pumpkins at http://demo.lizardsandpumpkins.com.loc/"
