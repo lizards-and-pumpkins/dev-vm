@@ -105,4 +105,4 @@ bash bin/consumerSupervisor.sh bin/eventConsumer.php &
 
 source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
 
-printf "\n\n\nAll done. Please add '33.33.33.77 demo.lizardsandpumpkins.com.loc' to your local hosts file. After that you will be able to access Lizards and Pumpkins at http://demo.lizardsandpumpkins.com.loc/"
+printf "\n\n\nAll done. Please add '192.168.56.121 demo.lizardsandpumpkins.com.loc' to your local hosts file. After that you will be able to access Lizards and Pumpkins at http://demo.lizardsandpumpkins.com.loc/"
