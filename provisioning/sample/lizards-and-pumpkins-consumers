@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+### BEGIN INIT INFO
+# Provides:      lizards-and-pumpkins-consumers
+# Required-Start:   
+# Required-Stop:   
+# Default-Start:   2 3 4 5
+# Default-Stop:    0 1 6
+# Short-Description:   Lizards & Pumpkins event and command consumers
+### END INIT INFO
+
+commandConsumerCount=1
+eventConsumerCount=1
+
+dir="/vagrant/sample-project/src/lizards-and-pumpkins/bin"
+supervisor="$dir/consumerSupervisor.sh"
+
+[ ! -d "$dir" ] && {
+    echo "Lizards & Pumpkins consumer scripts not found in $dir" >&2
+    exit 1
+}
+
+function start_consumers()
+{
+    count=$1
+    consumer=$2
+    for ((i=1; i<=$count; i++)); do
+        [ "$(whoami)" = "root" ] && sudo -u vagrant "source /vagrant/provisioning/sample/env; $supervisor" "$dir/$consumer" &
+        [ "$(whoami)" = "vagrant" ] && {
+            source /vagrant/provisioning/sample/env
+            "$supervisor" "$dir/$consumer" &
+        }
+    done
+}
+
+function kill_consumers()
+{
+    consumer=$1
+    pids=$(get_pids_for_worker $consumer)
+    [ ! -z "$pids" ] && kill -TERM $pids
+}
+
+function get_pids_for_worker()
+{
+    name=$1
+    [ "$(whoami)" = "root" ] && echo $(sudo -u vagrant ps x|grep $name|grep "$supervisor"|grep -v 'grep '|awk '{ print $1 }')
+    [ "$(whoami)" = "vagrant" ] && echo $(ps x|grep $name|grep "$supervisor"|grep -v 'grep '|awk '{ print $1 }')
+}
+
+case "$1" in
+  start)
+    echo "Starting $commandConsumerCount Lizards & Pumpkins command consumer(s) "
+    start_consumers $commandConsumerCount commandConsumer.php
+    
+    echo "Starting $eventConsumerCount Lizards & Pumpkins event consumer(s) "
+    start_consumers $eventConsumerCount eventConsumer.php
+    ;;
+  stop)
+    echo "Stopping Lizards & Pumpkins event consumer(s)"
+    kill_consumers eventConsumer.php
+    
+    echo "Stopping Lizards & Pumpkins command consumer(s)"
+    kill_consumers commandConsumer.php
+    ;;
+  status)
+    echo "Command Consumer PIDs: " $(get_pids_for_worker commandConsumer.php)
+    echo "Event Consumer PIDs:   " $(get_pids_for_worker eventConsumer.php)
+    ;;
+  *)
+    echo "Usage: /etc/init.d/lizards-and-pumpkins-consumers {start|stop|status}"
+    exit 1
+    ;;
+esac
+
+exit 0

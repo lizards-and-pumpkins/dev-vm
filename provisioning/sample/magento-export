@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+### BEGIN INIT INFO
+# Provides:      lizards-and-pumpkins-magento-export
+# Required-Start:   
+# Required-Stop:   
+# Default-Start:   2 3 4 5
+# Default-Stop:    0 1 6
+# Short-Description:   Lizards & Pumpkins magento export
+### END INIT INFO
+
+base_dir="/vagrant/sample-project"
+magento_dir="$base_dir/src/magento"
+log="$base_dir/share/log/export.log"
+supervisor="$base_dir/src/lizards-and-pumpkins/bin/consumerSupervisor.sh"
+exporter=pollExportQueue.php
+
+[ ! -d "$magento_dir" ] && {
+    echo "Lizards & Pumpkins magento sample install not found in $magento_dir" >&2
+    exit 1
+}
+
+function start_export()
+{
+    cd $magento_dir 
+    [ "$(whoami)" = "root" ] && sudo -u vagrant nohup $supervisor -l $log ./$exporter >> $log 2>&1 &
+    [ "$(whoami)" = "vagrant" ] && nohup $supervisor -l $log ./$exporter >> $log 2>&1 &
+}
+
+function kill_export()
+{
+    pid=$(get_pid_for_export)
+    [ ! -z "$pid" ] && kill -TERM $pid
+}
+
+function get_pid_for_export()
+{
+    [ "$(whoami)" = "root" ] && echo $(sudo -u vagrant ps x|grep $exporter|grep "$supervisor"|grep -v 'grep '|awk '{ print $1 }')
+    [ "$(whoami)" = "vagrant" ] && echo $(ps x|grep $exporter|grep "$supervisor"|grep -v 'grep '|awk '{ print $1 }')
+}
+
+case "$1" in
+  start)
+    echo "Starting Lizards & Pumpkins example Magento export"
+    start_export
+    ;;
+  stop)
+    echo "Stopping Lizards & Pumpkins example Magento export"
+    echo "The process will finish shortly"
+    kill_export
+    ;;
+  status)
+    echo "Magento Export PID: " $(get_pid_for_export)
+    ;;
+  *)
+    echo "Usage: /etc/init.d/magento-export {start|stop|status}"
+    exit 1
+    ;;
+esac
+
+exit 0

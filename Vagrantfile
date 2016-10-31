@@ -17,4 +17,5 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision "shell", path: "provisioning/init-vm.sh"
+  config.vm.provision "shell", path: "provisioning/scripts/always.sh", run: "always"
 end
