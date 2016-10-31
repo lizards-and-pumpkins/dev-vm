@@ -57,7 +57,7 @@ server {
     fastcgi_param LP_BASE_URL_EN "http://demo.lizardsandpumpkins.com.loc/en/";
     fastcgi_param LP_BASE_URL_DE "http://demo.lizardsandpumpkins.com.loc/de/";
     fastcgi_param LP_BASE_URL_FR "http://demo.lizardsandpumpkins.com.loc/fr/";
-    fastcgi_param LP_FILE_STORAGE_BASE_PATH "/vagrant/sample-project/tmp";
+    fastcgi_param LP_FILE_STORAGE_BASE_PATH "/vagrant/sample-project/file-storage";
     fastcgi_param LP_CATALOG_IMPORT_DIRECTORY "/vagrant/sample-project/share";
     fastcgi_param LP_MEDIA_BASE_PATH "/vagrant/sample-project/pub/media";
     fastcgi_param LP_WEBSITE_MAP "http://demo.lizardsandpumpkins.com.loc/=en|http://demo.lizardsandpumpkins.com.loc/en/=en|http://demo.lizardsandpumpkins.com.loc/de/=de|http://demo.lizardsandpumpkins.com.loc/fr/=fr";
