@@ -20,7 +20,7 @@ cd ..
 
 mkdir sample-project/share
 mkdir sample-project/share/log
-mkdir sample-project/tmp
+mkdir sample-project/file-storage
 
 git clone --depth 1 https://github.com/OpenMage/magento-lts.git sample-project/src/magento
 
