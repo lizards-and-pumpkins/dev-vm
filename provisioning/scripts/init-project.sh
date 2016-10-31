@@ -45,6 +45,7 @@ php /vagrant/provisioning/triggerMagentoSetupScripts.php
 
 rm -rf /vagrant/sample-project/src/magento/var/cache/
 
+source /vagrant/provisioning/sample/env
 echo "source /vagrant/provisioning/sample/env" >> ~/.bash_profile
 
 source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
