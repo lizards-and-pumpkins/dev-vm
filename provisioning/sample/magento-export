@@ -23,7 +23,7 @@ exporter=pollExportQueue.php
 function start_export()
 {
     cd $magento_dir 
-    [ "$(whoami)" = "root" ] && sudo -u vagrant nohup $supervisor -l $log ./$exporter >> $log 2>&1 &
+    [ "$(whoami)" = "root" ] && sudo -u vagrant --preserve-env nohup $supervisor -l $log ./$exporter >> $log 2>&1 &
     [ "$(whoami)" = "vagrant" ] && nohup $supervisor -l $log ./$exporter >> $log 2>&1 &
 }
 

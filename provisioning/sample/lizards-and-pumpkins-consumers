@@ -10,7 +10,7 @@
 ### END INIT INFO
 
 commandConsumerCount=1
-eventConsumerCount=1
+eventConsumerCount=2
 
 dir="/vagrant/sample-project/src/lizards-and-pumpkins/bin"
 supervisor="$dir/consumerSupervisor.sh"
@@ -25,10 +25,11 @@ function start_consumers()
     count=$1
     consumer=$2
     for ((i=1; i<=$count; i++)); do
-        [ "$(whoami)" = "root" ] && sudo -u vagrant "source /vagrant/provisioning/sample/env; $supervisor" "$dir/$consumer" &
+        source /vagrant/provisioning/sample/env
+        [ "$(whoami)" = "root" ] && sudo -u vagrant --preserve-env "$supervisor" "$dir/$consumer" &
         [ "$(whoami)" = "vagrant" ] && {
-            source /vagrant/provisioning/sample/env
             "$supervisor" "$dir/$consumer" &
+            sleep 0.5s
         }
     done
 }
