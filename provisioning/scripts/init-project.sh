@@ -14,7 +14,6 @@ export LC_ALL=en_US.UTF-8
 
 git clone https://github.com/lizards-and-pumpkins/sample-project.git
 cd sample-project/
-git checkout issue-1 # TODO: Remove once "issue-1" is merged into "master"
 git submodule update --init --recursive
 cd ..
 
