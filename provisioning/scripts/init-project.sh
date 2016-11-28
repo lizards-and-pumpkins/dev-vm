@@ -12,8 +12,12 @@ cd /vagrant
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-git clone https://github.com/lizards-and-pumpkins/sample-project.git
+[ ! -e sample-project ] && {
+    git clone https://github.com/lizards-and-pumpkins/sample-project.git
+}
+
 cd sample-project/
+git pull origin master
 git submodule update --init --recursive
 cd ..
 
