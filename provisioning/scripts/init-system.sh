@@ -16,7 +16,7 @@ grep -q -F "$deb" "$aptSources" || echo "$deb" >> "$aptSources"
 grep -q -F "$debSrc" "$aptSources" || echo "$debSrc" >> "$aptSources"
 
 gpg --keyserver keys.gnupg.net --recv-key 89DF5277
-gpg -a --export 89DF5277 | sudo apt-key add -
+gpg -a --export 89DF5277 | apt-key add -
 
 apt-get update
 apt-get -y install git-core
@@ -52,12 +52,15 @@ cd imagick/
 phpize
 ./configure
 make
-sudo make install
+make install
 
-grep -q -F 'extension=imagick.so' /etc/php/7.0/cli/php.ini || echo extension=imagick.so >> /etc/php/7.0/cli/php.ini
 grep -q -F 'extension=imagick.so' /etc/php/7.0/fpm/php.ini || echo extension=imagick.so >> /etc/php/7.0/fpm/php.ini
+grep -q -F 'extension=imagick.so' /etc/php/7.0/cli/php.ini || echo extension=imagick.so >> /etc/php/7.0/cli/php.ini
 
 sed -i -e 's/^display_errors = Off$/display_errors = On/' /etc/php/7.0/fpm/php.ini
+sed -i -e 's/^display_errors = Off$/display_errors = On/' /etc/php/7.0/cli/php.ini
+
+/etc/init.d/php7.0-fpm reload
 
 cd ..
 rm -fr imagick/
