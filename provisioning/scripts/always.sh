@@ -9,4 +9,4 @@ source /vagrant/provisioning/sample/env
 /etc/init.d/magento-export start
 /etc/init.d/lizards-and-pumpkins-consumers start
 
-source "$(dirname $0)/welcome.sh"
+source /vagrant/provisioning/scripts/welcome.sh

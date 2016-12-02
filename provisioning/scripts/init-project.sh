@@ -21,17 +21,25 @@ git pull origin master
 git submodule update --init --recursive
 cd ..
 
-mkdir sample-project/share
-mkdir sample-project/share/log
-mkdir sample-project/file-storage
+mkdir -p sample-project/share
+mkdir -p sample-project/share/log
+mkdir -p sample-project/file-storage
+cp -n provisioning/sample/my.cnf ~/.my.cnf
 
-git clone --depth 1 https://github.com/OpenMage/magento-lts.git sample-project/src/magento
 
-git clone --depth 1 https://github.com/riconeitzel/magento_sample_data_1.9.1.0_clean.git
-mv magento_sample_data_1.9.1.0_clean/src/media sample-project/share/
+[ ! -e sample-project/src/magento ] && {
+    git clone --no-progress --depth 1 https://github.com/OpenMage/magento-lts.git sample-project/src/magento
+    source sample-project/build/init.sh /vagrant/sample-project
+}
 
-cp provisioning/sample/my.cnf ~/.my.cnf
+[ ! -e magento_sample_data_1.9.1.0_clean ] && {
+    git clone --no-progress --depth 1 https://github.com/riconeitzel/magento_sample_data_1.9.1.0_clean.git
+}
 
+[ ! -e sample-project/share/media ] && {
+    mv magento_sample_data_1.9.1.0_clean/src/media sample-project/share/
+}
+    
 echo 'CREATE DATABASE IF NOT EXISTS `lizards-and-pumpkins-demo`' | mysql
 mysql lizards-and-pumpkins-demo < magento_sample_data_1.9.1.0_clean/src/magento_sample_data_for_1.9.1.0.sql
 echo "INSERT INTO core_config_data
@@ -40,9 +48,7 @@ echo "INSERT INTO core_config_data
    ('web/secure/base_url', 'http://demo.lizardsandpumpkins.com.loc/');" | mysql lizards-and-pumpkins-demo
 rm -fr magento_sample_data_1.9.1.0_clean
 
-cp provisioning/sample/local.xml sample-project/share/
-
-source sample-project/build/init.sh /vagrant/sample-project
+cp -f provisioning/sample/local.xml sample-project/share/
 
 php /vagrant/provisioning/triggerMagentoSetupScripts.php
 
