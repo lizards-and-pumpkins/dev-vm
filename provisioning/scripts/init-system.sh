@@ -33,7 +33,8 @@ ln -sf /etc/nginx/sites-available/demo.lizardsandpumpkins.com.loc /etc/nginx/sit
 
 grep -q -F 'demo.lizardsandpumpkins.com.loc' /etc/hosts || echo 127.0.0.1 demo.lizardsandpumpkins.com.loc >> /etc/hosts
 
-apt-get -y install php-fpm php-mysql php-curl php7.0-intl php7.0-gd php7.0-mbstring php7.0-xml php7.0-xdebug php7.0-imagick curl unzip
+apt-get -y install php-fpm php-mysql php-curl php7.0-intl php7.0-gd php7.0-mbstring php7.0-xml php7.0-xdebug \
+    php7.0-imagick curl unzip
 
 sed -i -e 's/^display_errors = Off$/display_errors = On/' /etc/php/7.0/fpm/php.ini
 sed -i -e 's/^display_errors = Off$/display_errors = On/' /etc/php/7.0/cli/php.ini
