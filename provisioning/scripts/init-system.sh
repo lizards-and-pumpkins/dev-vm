@@ -41,6 +41,7 @@ apt-get -y install php7.0-gd
 apt-get -y install php7.0-mbstring
 apt-get -y install php7.0-dev
 apt-get -y install php7.0-xml
+apt-get -y install php7.0-xdebug
 
 apt-get -y install curl
 apt-get -y install unzip
