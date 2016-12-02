@@ -13,7 +13,7 @@ export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 [ ! -e sample-project ] && {
-    git clone https://github.com/lizards-and-pumpkins/sample-project.git
+    git clone --no-progress https://github.com/lizards-and-pumpkins/sample-project.git
 }
 
 cd sample-project/
