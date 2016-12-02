@@ -33,41 +33,13 @@ ln -sf /etc/nginx/sites-available/demo.lizardsandpumpkins.com.loc /etc/nginx/sit
 
 grep -q -F 'demo.lizardsandpumpkins.com.loc' /etc/hosts || echo 127.0.0.1 demo.lizardsandpumpkins.com.loc >> /etc/hosts
 
-apt-get -y install php-fpm
-apt-get -y install php-mysql
-apt-get -y install php-curl
-apt-get -y install php7.0-intl
-apt-get -y install php7.0-gd
-apt-get -y install php7.0-mbstring
-apt-get -y install php7.0-dev
-apt-get -y install php7.0-xml
-apt-get -y install php7.0-xdebug
-
-apt-get -y install curl
-apt-get -y install unzip
-
-apt-get -y install imagemagick
-apt-get -y install libmagickwand-dev
-git clone --depth 1 https://github.com/mkoppanen/imagick.git
-cd imagick/
-phpize
-./configure
-make
-make install
-
-grep -q -F 'extension=imagick.so' /etc/php/7.0/fpm/php.ini || echo extension=imagick.so >> /etc/php/7.0/fpm/php.ini
-grep -q -F 'extension=imagick.so' /etc/php/7.0/cli/php.ini || echo extension=imagick.so >> /etc/php/7.0/cli/php.ini
+apt-get -y install php-fpm php-mysql php-curl php7.0-intl php7.0-gd php7.0-mbstring php7.0-xml php7.0-xdebug php7.0-imagick curl unzip
 
 sed -i -e 's/^display_errors = Off$/display_errors = On/' /etc/php/7.0/fpm/php.ini
 sed -i -e 's/^display_errors = Off$/display_errors = On/' /etc/php/7.0/cli/php.ini
 
 echo xdebug.remote_enable=On >> /etc/php/7.0/cli/conf.d/20-xdebug.ini
 echo xdebug.remote_connect_back=On >> /etc/php/7.0/cli/conf.d/20-xdebug.ini
-
-/etc/init.d/php7.0-fpm reload
-
-cd ..
-rm -fr imagick/
 
 curl -sL https://getcomposer.org/composer.phar -o /usr/local/bin/composer
 chmod 0755 /usr/local/bin/composer
