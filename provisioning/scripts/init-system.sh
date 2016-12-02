@@ -61,6 +61,9 @@ grep -q -F 'extension=imagick.so' /etc/php/7.0/cli/php.ini || echo extension=ima
 sed -i -e 's/^display_errors = Off$/display_errors = On/' /etc/php/7.0/fpm/php.ini
 sed -i -e 's/^display_errors = Off$/display_errors = On/' /etc/php/7.0/cli/php.ini
 
+echo xdebug.remote_enable=On >> /etc/php/7.0/cli/conf.d/20-xdebug.ini
+echo xdebug.remote_connect_back=On >> /etc/php/7.0/cli/conf.d/20-xdebug.ini
+
 /etc/init.d/php7.0-fpm reload
 
 cd ..
