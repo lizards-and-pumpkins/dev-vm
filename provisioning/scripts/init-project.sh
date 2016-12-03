@@ -57,6 +57,8 @@ cp -f provisioning/sample/local.xml sample-project/share/
 
 php /vagrant/provisioning/triggerMagentoSetupScripts.php
 
+n98-magerun admin:user:create admin demo@example.com password123 Admin User Administrators 
+
 rm -rf /vagrant/sample-project/src/magento/var/cache/
 
 echo "source /vagrant/provisioning/sample/env" >> ~/.bash_profile

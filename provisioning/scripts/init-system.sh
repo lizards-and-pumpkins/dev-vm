@@ -50,6 +50,9 @@ chmod 0755 /usr/local/bin/composer
 curl -sL https://raw.githubusercontent.com/colinmollenhour/modman/master/modman -o /usr/local/bin/modman
 chmod 0755 /usr/local/bin/modman
 
+curl -sL https://files.magerun.net/n98-magerun.phar -o /usr/local/bin/n98-magerun
+chmod 0755 /usr/local/bin/n98-magerun
+
 cp provisioning/sample/motd /etc/motd
 chmod 0644 /etc/motd
 
