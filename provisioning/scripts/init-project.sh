@@ -57,7 +57,9 @@ cp -f provisioning/sample/local.xml sample-project/share/
 
 php /vagrant/provisioning/triggerMagentoSetupScripts.php
 
-n98-magerun admin:user:create admin demo@example.com password123 Admin User Administrators 
+cd sample-project/src/magento
+n98-magerun admin:user:create admin demo@example.com password123 Admin User Administrators
+cd -
 
 rm -rf /vagrant/sample-project/src/magento/var/cache/
 
