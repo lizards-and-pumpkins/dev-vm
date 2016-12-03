@@ -69,4 +69,7 @@ mkdir -p /vagrant/sample-project/src/magento/var/session
 chmod 0777 /tmp/magento/session-dir /vagrant/sample-project/src/magento/var/session
 sudo mount -obind /tmp/magento/session-dir /vagrant/sample-project/src/magento/var/session
 
-sleep 10 && /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project &
+# allow time for provisioning to settle down to avoid api request max_execution_time timeouts
+sleep 10
+/vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project &
+sleep 10
