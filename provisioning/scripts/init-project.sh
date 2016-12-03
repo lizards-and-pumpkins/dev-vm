@@ -13,7 +13,10 @@ export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 [ ! -e sample-project ] && {
-    git clone --no-progress https://github.com/lizards-and-pumpkins/sample-project.git
+    echo "Cloning https://github.com/lizards-and-pumpkins/sample-project.git"
+    git clone --quiet https://github.com/lizards-and-pumpkins/sample-project.git
+    
+    ln -s /vagrant/sample-project ~/sample-project
 }
 
 cd sample-project/
@@ -28,12 +31,14 @@ cp -n provisioning/sample/my.cnf ~/.my.cnf
 
 
 [ ! -e sample-project/src/magento ] && {
-    git clone --no-progress --depth 1 https://github.com/OpenMage/magento-lts.git sample-project/src/magento
+    echo "Cloning https://github.com/OpenMage/magento-lts.git into sample-project/src/magento"
+    git clone --quiet --depth 1 https://github.com/OpenMage/magento-lts.git sample-project/src/magento
     source sample-project/build/init.sh /vagrant/sample-project
 }
 
 [ ! -e magento_sample_data_1.9.1.0_clean ] && {
-    git clone --no-progress --depth 1 https://github.com/riconeitzel/magento_sample_data_1.9.1.0_clean.git
+    echo "Cloning https://github.com/riconeitzel/magento_sample_data_1.9.1.0_clean.git"
+    git clone --quiet --depth 1 https://github.com/riconeitzel/magento_sample_data_1.9.1.0_clean.git
 }
 
 [ ! -e sample-project/share/media ] && {
@@ -54,9 +59,14 @@ php /vagrant/provisioning/triggerMagentoSetupScripts.php
 
 rm -rf /vagrant/sample-project/src/magento/var/cache/
 
-source /vagrant/provisioning/sample/env
 echo "source /vagrant/provisioning/sample/env" >> ~/.bash_profile
+source /vagrant/provisioning/sample/env
 
-source /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project
+set +e
 
-ln -s /vagrant/sample-project ~/sample-project
+mkdir -p /tmp/magento/session-dir
+mkdir -p /vagrant/sample-project/src/magento/var/session
+chmod 0777 /tmp/magento/session-dir /vagrant/sample-project/src/magento/var/session
+sudo mount -obind /tmp/magento/session-dir /vagrant/sample-project/src/magento/var/session
+
+sleep 10 && /vagrant/sample-project/build/buildLizardsAndPumpkinsSnippets.sh /vagrant/sample-project &
