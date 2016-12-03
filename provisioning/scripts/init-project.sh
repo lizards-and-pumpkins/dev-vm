@@ -35,6 +35,7 @@ cp -n provisioning/sample/my.cnf ~/.my.cnf
     git clone --quiet --depth 1 https://github.com/OpenMage/magento-lts.git sample-project/src/magento
     source sample-project/build/init.sh /vagrant/sample-project
 }
+chmod 0777 sample-project/src/magento/var
 
 [ ! -e magento_sample_data_1.9.1.0_clean ] && {
     echo "Cloning https://github.com/riconeitzel/magento_sample_data_1.9.1.0_clean.git"
