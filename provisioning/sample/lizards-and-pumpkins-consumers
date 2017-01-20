@@ -26,15 +26,14 @@ function start_consumers()
     consumer=$2
     source /vagrant/provisioning/sample/env
     [ "$(whoami)" = "root" ] && sudo -u vagrant --preserve-env "$manage_consumer" "$consumer" start "$count"
-    [ "$(whoami)" = "vagrant" ] && {
-        "$manage_consumer" "$consumer" start "$count"
-    }
+    [ "$(whoami)" = "vagrant" ] && "$manage_consumer" "$consumer" start "$count"
 }
 
 function kill_consumers()
 {
     consumer=$1
-    "$manage_consumer" "$consumer" stop-all
+    [ "$(whoami)" = "root" ] && sudo -u vagrant --preserve-env "$manage_consumer" "$consumer" stop-all
+    [ "$(whoami)" = "vagrant" ] && "$manage_consumer" "$consumer" stop-all
     sleep 0.75
 }
 
