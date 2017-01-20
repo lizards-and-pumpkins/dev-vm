@@ -13,7 +13,7 @@ commandConsumerCount=1
 eventConsumerCount=2
 
 dir="/vagrant/sample-project/src/lizards-and-pumpkins/bin"
-supervisor="$dir/consumerSupervisor.sh"
+manage_consumer="$dir/manage-consumer.sh"
 
 [ ! -d "$dir" ] && {
     echo "Lizards & Pumpkins consumer scripts not found in $dir" >&2
@@ -24,21 +24,18 @@ function start_consumers()
 {
     count=$1
     consumer=$2
-    for ((i=1; i<=$count; i++)); do
-        source /vagrant/provisioning/sample/env
-        [ "$(whoami)" = "root" ] && sudo -u vagrant --preserve-env "$supervisor" "$dir/$consumer" &
-        [ "$(whoami)" = "vagrant" ] && {
-            "$supervisor" "$dir/$consumer" &
-            sleep 0.5s
-        }
-    done
+    source /vagrant/provisioning/sample/env
+    [ "$(whoami)" = "root" ] && sudo -u vagrant --preserve-env "$manage_consumer" "$consumer" start "$count"
+    [ "$(whoami)" = "vagrant" ] && {
+        "$manage_consumer" "$consumer" start "$count"
+    }
 }
 
 function kill_consumers()
 {
     consumer=$1
-    pids=$(get_pids_for_worker $consumer)
-    [ ! -z "$pids" ] && kill -TERM $pids
+    "$manage_consumer" "$consumer" stop-all
+    sleep 0.75
 }
 
 function get_pids_for_worker()
@@ -48,20 +45,21 @@ function get_pids_for_worker()
     [ "$(whoami)" = "vagrant" ] && echo $(ps x|grep $name|grep "$supervisor"|grep -v 'grep '|awk '{ print $1 }')
 }
 
+
 case "$1" in
   start)
     echo "Starting $commandConsumerCount Lizards & Pumpkins command consumer(s) "
-    start_consumers $commandConsumerCount commandConsumer.php
+    start_consumers $commandConsumerCount command
     
     echo "Starting $eventConsumerCount Lizards & Pumpkins event consumer(s) "
-    start_consumers $eventConsumerCount eventConsumer.php
+    start_consumers $eventConsumerCount event
     ;;
   stop)
     echo "Stopping Lizards & Pumpkins event consumer(s)"
-    kill_consumers eventConsumer.php
+    kill_consumers event
     
     echo "Stopping Lizards & Pumpkins command consumer(s)"
-    kill_consumers commandConsumer.php
+    kill_consumers command
     ;;
   status)
     echo "Command Consumer PIDs: " $(get_pids_for_worker commandConsumer.php)
