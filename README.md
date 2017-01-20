@@ -62,6 +62,13 @@ See the number of messages in the command and event queue:
 `/vagrant/sample-project/src/lizards-and-pumpkins/bin/reportQueueCount.php`
 (I like to run `watch src/lizards-and-pumpkins/bin/reportQueueCount.php`)
 
+To start or stop worker processes interactively use the command  
+`/vagrant/sample-project/src/lizards-and-pumpkins/bin/manage-workers-ui.sh`
+
+To start or stop worker processes in a script, for example during provisioning, use  
+`/vagrant/sample-project/src/lizards-and-pumpkins/bin/manage-consumer.sh (event|command) (start|stop) [count]`  
+`/vagrant/sample-project/src/lizards-and-pumpkins/bin/manage-consumer.sh (event|command) stop-all`
+
 
 ### Additional notes:
 
