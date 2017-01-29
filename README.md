@@ -35,6 +35,7 @@ To start or stop the Magento export service, use the init script
 | NGINX config:                  | /etc/nginx/sites-enabled/demo.lizardsandpumpkins.com.loc |
 | Magento root directory:        | /vagrant/sample-project/src/magento |
 | MySQL root password            | root |
+| Magento admin user             | admin / password123 |
 | Local write mounts             | /tmp/magento/session-dir and cache-dir |
 
 ## Helpful commands
