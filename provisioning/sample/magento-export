@@ -12,7 +12,7 @@
 base_dir="/vagrant/sample-project"
 magento_dir="$base_dir/src/magento"
 log="$base_dir/share/log/export.log"
-supervisor="$base_dir/src/lizards-and-pumpkins/bin/consumerSupervisor.sh"
+supervisor="$base_dir/vendor/lizards-and-pumpkins/catalog/bin/consumerSupervisor.sh"
 exporter=pollExportQueue.php
 
 [ ! -d "$magento_dir" ] && {
