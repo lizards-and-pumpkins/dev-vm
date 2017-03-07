@@ -18,6 +18,7 @@ grep -q -F "$debSrc" "$aptSources" || echo "$debSrc" >> "$aptSources"
 gpg --keyserver keys.gnupg.net --recv-key 89DF5277
 gpg -a --export 89DF5277 | apt-key add -
 
+apt-key update
 apt-get update
 apt-get -y install git-core
 apt-get -y install vim
