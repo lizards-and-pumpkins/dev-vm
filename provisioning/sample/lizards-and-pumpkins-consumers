@@ -12,7 +12,7 @@
 commandConsumerCount=1
 eventConsumerCount=2
 
-dir="/vagrant/sample-project/src/lizards-and-pumpkins/bin"
+dir="/vagrant/sample-project/vendor/lizards-and-pumpkins/catalog/bin"
 manage_consumer="$dir/manage-consumer.sh"
 
 [ ! -d "$dir" ] && {
@@ -61,8 +61,8 @@ case "$1" in
     kill_consumers command
     ;;
   status)
-    echo "Command Consumer PIDs: " $(get_pids_for_worker commandConsumer.php)
-    echo "Event Consumer PIDs:   " $(get_pids_for_worker eventConsumer.php)
+    echo "Command Consumer PIDs: " $(get_pids_for_worker consume:commands)
+    echo "Event Consumer PIDs:   " $(get_pids_for_worker consume:events)
     ;;
   *)
     echo "Usage: /etc/init.d/lizards-and-pumpkins-consumers {start|stop|status}"

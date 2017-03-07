@@ -25,8 +25,7 @@ To start or stop the Magento export service, use the init script
 | Information                    | Value                     |
 |--------------------------------|---------------------------|
 | L&P Environment Config         | /vagrant/provisioning/sample/env |
-| L&P Utility Scripts            | /vagrant/sample-project/src/lizards-and-pumpkins/bin |
-| Sample project base directory: | /vagrant/sample-project |
+| Sample project base directory: | /vagrant/sample-project (or ~/sample-project) |
 | Sample project storage root:   | /vagrant/sample-project/share |
 | WWW document root:             | /vagrant/sample-project/pub |
 | Lizards & Pumpkins Log File    | /vagrant/sample-project/share/log/system.log |
@@ -42,7 +41,7 @@ To start or stop the Magento export service, use the init script
 
 List URL paths of pages available in Lizards & Pumpkins:
 
-`/vagrant/sample-project/src/lizards-and-pumpkins/bin/listUrlKeys.php {-t all|listing|product}`
+`/vagrant/sample-project/vendor/bin/lp report:url-keys {-t all|listing|product}`
 
 Show the configured Lizards & Pumpkins environment:
 
@@ -50,7 +49,7 @@ Show the configured Lizards & Pumpkins environment:
 
 Clear the filesystem queues and data pool:
 
-`/vagrant/sample-project/src/lizards-and-pumpkins/bin/clearFileStorages.php`
+`rm -r /vagrant/sample-project/file-storage/*`
 
 Run a full export from Magento:
 
@@ -60,15 +59,15 @@ Run a full export from Magento:
 
 See the number of messages in the command and event queue:
 
-`/vagrant/sample-project/src/lizards-and-pumpkins/bin/reportQueueCount.php`
-(I like to run `watch src/lizards-and-pumpkins/bin/reportQueueCount.php`)
+`/vagrant/sample-project/vendor/bin/lp report:queue-count`
+(I like to run `watch vendor/bin/lp report:queue-count`)
 
 To start or stop worker processes interactively use the command  
-`/vagrant/sample-project/src/lizards-and-pumpkins/bin/manage-workers-ui.sh`
+`/vagrant/sample-project/vendor/lizards-and-pumpkins/catalog/bin/interactive-consumer-ui.sh`
 
 To start or stop worker processes in a script, for example during provisioning, use  
-`/vagrant/sample-project/src/lizards-and-pumpkins/bin/manage-consumer.sh (event|command) (start|stop) [count]`  
-`/vagrant/sample-project/src/lizards-and-pumpkins/bin/manage-consumer.sh (event|command) stop-all`
+`/vagrant/sample-project/vendor/lizards-and-pumpkins/catalog/bin/manage-consumer.sh (event|command) (start|stop) [count]`  
+`/vagrant/sample-project/vendor/lizards-and-pumpkins/catalog/bin/manage-consumer.sh (event|command) stop-all`
 
 
 ### Additional notes:
@@ -89,11 +88,7 @@ NGINX is configured to pass page requests that can't be processed by Lizards & P
 
 #### Getting more detailed information on what is being processed
 
-In the scripts `sample-project/src/lizards-and-pumpkins/bin/eventConsumer.php` and `sample-project/src/lizards-and-pumpkins/bin/commandConsumer.php`, enable the line
-
-```
-//$this->enableDebugLogging($commonFactory, $implementationFactory);
-```
+Set and export the environment variable `LP_DEBUG_LOG` to 1 and restart the event and command consumers. 
 
 This will log each processed event and command to the file `/vagrant/sample-project/share/log/system.log`.
-With this data the script `sample-project/src/lizards-and-pumpkins/bin/reportDomainEventProcessingAvg.php <logfile>` can be used to extract processing time averages.
+With this data the script `sample-project/vendor/lizards-and-pumpkins/catalog/bin/lp report:event-processing-time-average <logfile>` can be used to extract processing time averages.
