@@ -13,7 +13,7 @@ export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 [ ! -e sample-project ] && {
-    SAMPLE_PROJECT_VERSION=2018-02-25-01
+    SAMPLE_PROJECT_VERSION=2018-03-26-01
 
     echo "Cloning https://github.com/lizards-and-pumpkins/sample-project.git"
     git clone --quiet https://github.com/lizards-and-pumpkins/sample-project.git
